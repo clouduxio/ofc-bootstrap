@@ -182,7 +182,7 @@ secrets:
 #### This can also be your private registry
 #### Format: registry/username/ - i.e. replace ofctest with your login
 
-registry: docker.pkg.github.com/agrgic16/
+registry: docker.io/clouduxio/
 
 ### Enable only if using AWS ECR
 enable_ecr: false
