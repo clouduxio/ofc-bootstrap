@@ -182,7 +182,7 @@ secrets:
 #### This can also be your private registry
 #### Format: registry/username/ - i.e. replace ofctest with your login
 
-registry: "docker.pkg.github.com/"
+registry: docker.pkg.github.com/agrgic16/
 
 ### Enable only if using AWS ECR
 enable_ecr: false
@@ -263,7 +263,7 @@ tls_config:
 # issuer_type: "prod"
 
   issuer_type: "prod"
-  email: "hello+prod-tls-issuer@cloudux.io"
+  email: "hello+tls@cloudux.io"
 
 ## Select DNS web service between Amazon Route 53 (route53) and Google Cloud DNS (clouddns)
 # by uncommenting the required option
