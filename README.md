@@ -243,7 +243,9 @@ OpenFaaS Cloud also supports Amazon's managed container registry called ECR.
 
 * Set `enable_ecr: true` in `init.yaml`
 
-* Define a `config.json` by running the following command
+* Set your AWS region `ecr_region: "your-aws-region"` in `init.yaml`
+ 
+* Define a `./credentials/config.json` by running the following command
 
 ```sh
 ofc-bootstrap registry-login --ecr --region <your-aws-region> --account-id <your-account-id>
@@ -308,6 +310,11 @@ Your SCM will need to send webhooks to OpenFaaS Cloud's github-event or gitlab-e
   * Update the `### User-input` section including your System Hook's API Token and *Webhook secret*
 * Create your GitHub / GitLab OAuth App which is used for logging in to the dashboard
 * For GitLab update `init.yaml` with your `gitlab_instance`
+
+Alternatively, there are two automated ways you can create a GitHub App, but the GitHub OAuth configuration cannot be automated at this time.
+
+1) Fully-automatic `ofc-bootstrap create-github-app` command - this is in Alpha status, but will generate a YAML file you can use with `--file` / `-f` as an override
+2) Semi-automatic [GitHub App generator](http://alexellis.o6s.io/github-app)
 
 #### Setup your access control
 

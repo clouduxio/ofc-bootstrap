@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+
+
 export eTAG="latest-dev"
 echo $1
 if [ $1 ] ; then

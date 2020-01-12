@@ -2,12 +2,20 @@
 
 
 [[projects]]
-  digest = "1:5f3df16029b0602205733ba18f315ef0980c6d50cb83a5e033a18f5e25b21b88"
+  digest = "1:74860eb071d52337d67e9ffd6893b29affebd026505aa917ec23131576a91a77"
   name = "github.com/alexellis/go-execute"
+  packages = ["pkg/v1"]
+  pruneopts = "UT"
+  revision = "961405ea754427780f2151adff607fa740d377f7"
+  version = "0.3.0"
+
+[[projects]]
+  digest = "1:78d28d5b84a26159c67ea51996a230da4bc07cac648adaae1dfb5fc0ec8e40d3"
+  name = "github.com/imdario/mergo"
   packages = ["."]
   pruneopts = "UT"
-  revision = "f43ca01b248ab8a3302c50770c30945d18546851"
-  version = "0.1.1"
+  revision = "1afb36080aec31e0d1528973ebe6721b191b0369"
+  version = "v0.3.8"
 
 [[projects]]
   digest = "1:870d441fe217b8e689d7949fef6e43efbc787e50f200cb1e70dbca9204a1d6be"
@@ -18,12 +26,28 @@
   version = "v1.0"
 
 [[projects]]
+  digest = "1:8fcbcd852568136e8398d393271d31c7803b5a220c7b94d1e0288b37e378293c"
+  name = "github.com/inlets/inletsctl"
+  packages = ["pkg/names"]
+  pruneopts = "UT"
+  revision = "50c2962e9dc776b68b2faa96bdde24c5e40e3c05"
+  version = "0.3.8"
+
+[[projects]]
   digest = "1:906eb1ca3c8455e447b99a45237b2b9615b665608fd07ad12cce847dd9a1ec43"
   name = "github.com/morikuni/aec"
   packages = ["."]
   pruneopts = "UT"
   revision = "39771216ff4c63d11f5e604076f9c45e8be1067b"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
+  version = "v0.8.1"
 
 [[projects]]
   digest = "1:e096613fb7cf34743d49af87d197663cfccd61876e2219853005a57baedfa562"
@@ -53,8 +77,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/alexellis/go-execute",
+    "github.com/alexellis/go-execute/pkg/v1",
+    "github.com/imdario/mergo",
+    "github.com/inlets/inletsctl/pkg/names",
     "github.com/morikuni/aec",
+    "github.com/pkg/errors",
     "github.com/spf13/cobra",
     "gopkg.in/yaml.v2",
   ]
