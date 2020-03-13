@@ -8,13 +8,15 @@ This tool automates the installation of OpenFaaS Cloud on Kubernetes. Before sta
 
 For your cluster the following specifications are recommended:
 
-* 2-3 nodes with 1-2 vCPU and 2-4GB RAM each
+* 3-4 nodes with 2 vCPU each and 4GB RAM
 
-These are guidelines and not a hard requirement, you may well be able to run with fewer resources.
+These are guidelines and not a hard requirement, you may well be able to run with fewer resources, but please do not ask for support if you use less and run into problems.
+
+> Note: You must use Intel hardware, ARM such as arm64 and armhf (Raspberry Pi) is not supported and not on the roadmap either. This could change if a company was willing to sponsor and pay for the features and ongoing maintenance.
 
 ### Note for k3s users
 
-If using k3s. ofc-bootstrap uses Nginx for its IngressController, but k3s ships with Traefik and this will configuration is incompatible. When you set up k3s, make sure you pass the `--no-deploy traefik` flag.
+If you are using k3s, then you will need to disable Traefik. ofc-bootstrap uses nginx-ingress for its IngressController, but k3s ships with Traefik and this will configuration is incompatible. When you set up k3s, make sure you pass the `--no-deploy traefik` flag.
 
 Example with [k3sup](https://k3sup.dev):
 
@@ -28,7 +30,7 @@ Example with [k3d](https://github.com/rancher/k3d):
 k3d create --server-arg "--no-deploy=traefik"
 ```
 
-> From Alex: If you're planning on using k3s with DigitalOcean, please stop and think why you are doing this instead of using the managed service called DOKS. DOKS is a free, managed control-plane and much less work for you, k3s on Droplets will be more expensive given that you have to run your own "master".
+> A note on DigitalOcean: if you're planning on using k3s with DigitalOcean, please stop and think why you are doing this instead of using the managed service called DOKS. DOKS is a free, managed control-plane and much less work for you, k3s on Droplets will be more expensive given that you have to run your own "master".
 
 ### Credentials and dependent systems
 
@@ -225,6 +227,12 @@ Find the section of the YAML `registry:` set the value accordingly, replacing `A
 
 The final `/` is required
 
+When using ECR a user can namespace their registries per cluster by adding a suffix to the ecr registry:
+
+`$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/your-cluster-suffix`
+
+This would create registries prefixed with `your-cluster-prefix` for the user's docker images.
+
 * Create a new user with the role `AmazonEC2ContainerRegistryFullAccess` - see also [AWS permissions for ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/ecr_managed_policies.html)
 
 * The file will be read from `~/.aws/credentials` by default, but you can change this via editing the path in `value_from` under the `ecr-credentials` secret
@@ -267,7 +275,9 @@ Your SCM will need to send webhooks to OpenFaaS Cloud's github-event or gitlab-e
   * If not using a generated value, set the `github-webhook-secret` literal value with your *Webhook secret* for the GitHub App's
   * Click *Generate a private key*, this will be downloaded to your local computer (if you ever need a new one, generate a new one and delete the old key)
   * Update the `private-key` `value_from` to the path of the GitHub App's private key
-
+  * Make sure the app is "activated" using the checkbox at the bottom of the github page.
+  
+  
 * For GitLab create a System Hook
   * Leave the `value:` for `gitlab-webhook-secret` blank, or set your own password
   * Update the `## User-input` section including your System Hook's API Token and *Webhook secret*
@@ -356,6 +366,12 @@ You can start out by using the Staging issuer, then switch to the production iss
 > Hint: For aws route53 DNS, create your secret key file `~/Downloads/route53-secret-access-key` (the default location) with only the secret access key, no newline and no other characters.
 
 > Note if you want to switch from the staging TLS certificates to production certificates, see the appendix.
+
+### Use a Kubernetes secret instead of a customers URL (optional)
+
+If you want to keep your list of users private, you can use a Kubernetes secret instead.
+
+Set `customers_secret:` to `true` and then edit the two secrets `customers` and `of-customers`.
 
 ### Enable dockerfile language support (optional)
 
@@ -458,6 +474,7 @@ http://system.example.com/dashboard/<username>
 
 Just replace `<username>` with your GitHub account. 
 > If you have enabled OAuth you only need to navigate to system.example.com
+
 ## Trigger a build
 
 Now you can install your GitHub app on a repo, run `faas-cli new` and then rename the YAML file to `stack.yml` and do a `git push`. Your OpenFaaS Cloud cluster will build and deploy the functions found in that GitHub repo.
@@ -557,3 +574,4 @@ kubectl apply -f ./tmp/generated-ingress-ingress.yaml
 kubectl apply -f ./tmp/generated-tls-auth-domain-cert.yml
 kubectl apply -f ./tmp/generated-tls-wildcard-domain-cert.yml
 ```
+
