@@ -188,7 +188,7 @@ registry: docker.io/clouduxio/
 enable_ecr: false
 
 ### Your root DNS domain name, this can be a sub-domain i.e. staging.o6s.io / prod.o6s.io
-root_domain: "dev-00.cloudux.io"
+root_domain: "app.cloudux.io"
 
 ## Ingress into OpenFaaS Cloud
 
@@ -293,7 +293,7 @@ enable_dockerfile_lang: true
 scale_to_zero: true
 
 ## Version of OpenFaaS Cloud from https://github.com/openfaas/openfaas-cloud/releases/
-openfaas_cloud_version: 0.12.0
+openfaas_cloud_version: 0.13.10
 
 ## Enable network policies
 ### Prevents functions from talking to the openfaas namespace, and to each other.
